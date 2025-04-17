@@ -17,25 +17,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EmpImplementingController = void 0;
 const inversify_1 = require("inversify");
-const emp_implementingService_1 = require("../services/emp.implementingService");
+//import { EmpImplementingService } from '../services/emp.implementingService';
 const types_1 = __importDefault(require("../inversify/types"));
-let EmpImplementingController = class EmpImplementingController /*implements IEmpController*/ {
-    constructor(empservice) {
-        this.empservice = empservice;
+let EmpImplementingController = class EmpImplementingController {
+    constructor(myservice) {
+        this.myservice = myservice;
+        //todo: Create Employee
+        this.createEmp = async (req, res) => {
+            try {
+                console.log(req.body);
+                const { firstName, lastName, mobileNumber, email, age, gender, city } = req.body;
+                console.log(firstName);
+                const emp = await this.myservice.createEmp(firstName, lastName, mobileNumber, email, age, gender, city);
+                console.log(emp);
+                res.status(emp.status).json({ message: emp.message });
+            }
+            catch (error) {
+                res.status(500).json({ message: "Internal Server Error" });
+            }
+        };
     }
-    async createEmp(req, res) {
+    // todo:get Employee
+    async getAllEmp(req, res) {
         try {
-            console.log(req.body);
-            const { firstName, lastName, mobileNumber, email, age, gender, city } = req.body;
-            console.log(firstName);
-            const emp = await this.empservice.createEmp(firstName, lastName, mobileNumber, email, age, gender, city);
-            console.log(emp);
-            console.log(emp.status);
-            console.log(emp.message);
-            return res.status(emp.status).json({ message: emp.message });
+            const emp = await this.myservice.getAllEmp();
+            return res.status(emp.status).json({ message: emp.message, data: emp.data });
         }
         catch (error) {
-            console.log(error);
             return res.status(500).json({ message: "Internal Server Error" });
         }
     }
@@ -44,5 +52,5 @@ exports.EmpImplementingController = EmpImplementingController;
 exports.EmpImplementingController = EmpImplementingController = __decorate([
     (0, inversify_1.injectable)(),
     __param(0, (0, inversify_1.inject)(types_1.default.EmpImplementingService)),
-    __metadata("design:paramtypes", [emp_implementingService_1.EmpImplementingService])
+    __metadata("design:paramtypes", [Object])
 ], EmpImplementingController);

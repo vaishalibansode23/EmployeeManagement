@@ -18,19 +18,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.EmpImplementingService = void 0;
 const inversify_1 = require("inversify");
 const types_1 = __importDefault(require("../inversify/types"));
-const emp_implementingRepository_1 = require("../repositories/emp.implementingRepository");
-let EmpImplementingService = class EmpImplementingService /*implements IEmpService*/ {
+//import { EmpImplementingRepository } from "../repositories/emp.implementingRepository";
+let EmpImplementingService = class EmpImplementingService {
     constructor(emprepository) {
         this.emprepository = emprepository;
+        this.createEmp = async (firstName, lastName, mobileNumber, email, age, gender, city) => {
+            return await this.emprepository.createEmp(firstName, lastName, mobileNumber, email, age, gender, city);
+        };
     }
-    async createEmp(firstName, lastName, mobileNumber, email, age, gender, city) {
-        console.log("in service");
-        return await this.emprepository.createEmp(firstName, lastName, mobileNumber, email, age, gender, city);
+    async getAllEmp() {
+        return await this.emprepository.getAllEmp();
     }
 };
 exports.EmpImplementingService = EmpImplementingService;
 exports.EmpImplementingService = EmpImplementingService = __decorate([
     (0, inversify_1.injectable)(),
     __param(0, (0, inversify_1.inject)(types_1.default.EmpImplementingRepository)),
-    __metadata("design:paramtypes", [emp_implementingRepository_1.EmpImplementingRepository])
+    __metadata("design:paramtypes", [Object])
 ], EmpImplementingService);

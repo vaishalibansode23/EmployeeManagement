@@ -1,13 +1,13 @@
 import mongoose from "mongoose"
-// export interface IEmp{
-//     firstName:string,
-//     lastName:string,
-//     mobileNumber:string,
-//     email:string,
-//     age:number,
-//     gender:string,
-//     city:string
-// }
+export interface IEmp{
+    firstName:string,
+    lastName:string,
+    mobileNumber:string,
+    email:string,
+    age:number,
+    gender:string,
+    city:string
+}
 
 const empSchema=new mongoose.Schema({
     firstName:{

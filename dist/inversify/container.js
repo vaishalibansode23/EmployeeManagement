@@ -9,7 +9,7 @@ const emp_implementingRepository_1 = require("../repositories/emp.implementingRe
 const emp_implementingService_1 = require("../services/emp.implementingService");
 const types_1 = __importDefault(require("./types"));
 const container = new inversify_1.Container();
-container.bind(types_1.default.EmpImplementingRepository).to(emp_implementingRepository_1.EmpImplementingRepository);
-container.bind(types_1.default.EmpImplementingController).to(emp_implementingController_1.EmpImplementingController);
-container.bind(types_1.default.EmpImplementingService).to(emp_implementingService_1.EmpImplementingService);
+container.bind(types_1.default.EmpImplementingRepository).to(emp_implementingRepository_1.EmpImplementingRepository).inSingletonScope();
+container.bind(types_1.default.EmpImplementingController).to(emp_implementingController_1.EmpImplementingController).inSingletonScope();
+container.bind(types_1.default.EmpImplementingService).to(emp_implementingService_1.EmpImplementingService).inSingletonScope();
 exports.default = container;

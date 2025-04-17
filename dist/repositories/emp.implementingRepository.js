@@ -9,11 +9,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.EmpImplementingRepository = void 0;
 const inversify_1 = require("inversify");
 const emp_model_1 = require("../models/emp.model");
-let EmpImplementingRepository = class EmpImplementingRepository /*implements IEmpRepository*/ {
-    async createEmp(firstName, lastName, mobileNumber, email, age, gender, city) {
-        const existingemp = emp_model_1.Emp.findOne({ email: email });
-        console.log(existingemp);
-        if (!existingemp) {
+let EmpImplementingRepository = class EmpImplementingRepository {
+    constructor() {
+        //todo :Create Employee
+        this.createEmp = async (firstName, lastName, mobileNumber, email, age, gender, city) => {
+            const existingemp = await emp_model_1.Emp.findOne({ email: email });
+            console.log(existingemp);
+            if (existingemp) {
+                return { status: 409, message: "Employee already register with given eamil" };
+                ;
+            }
             const newEmp = new emp_model_1.Emp({
                 firstName: firstName,
                 lastName: lastName,
@@ -24,8 +29,16 @@ let EmpImplementingRepository = class EmpImplementingRepository /*implements IEm
                 city: city
             });
             const emp = await newEmp.save();
-            return emp;
+            return { status: 201, message: "Successfully created" };
+        };
+    }
+    //todo:Gel All Employee
+    async getAllEmp() {
+        const emp = await emp_model_1.Emp.find({});
+        if (!emp) {
+            return { status: 404, message: "No employee found" };
         }
+        return { status: 200, message: "Success", data: emp };
     }
 };
 exports.EmpImplementingRepository = EmpImplementingRepository;
